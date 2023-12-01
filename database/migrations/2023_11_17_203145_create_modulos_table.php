@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('materia');
             $table->integer('h_semanales');
             $table->integer('h_totales');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id');
+            $table->foreignId('especialidad_id')->constrained('especialidades');
             // $table->integer('especialidad_id');
             // $table->integer('curso_id');
         });
@@ -29,6 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('modulos', function (Blueprint $table) {
+            $table->dropForeign('modulos_user_id_foreign');
+        });
         Schema::dropIfExists('modulos');
     }
 };

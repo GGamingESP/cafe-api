@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\ModuloResource;
 use App\Models\Modulo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class ModuloController extends Controller
             'h_semanales' => 'required|integer',
             'h_totales' => 'required|integer',
             'user_id' => 'required|integer',
+            'especialidad_id' => 'required|integer'
         ]);
 
         $data = $data = $validator->validated();
@@ -49,7 +51,8 @@ class ModuloController extends Controller
     public function show(Modulo $modulo)
     {
         //
-        return response()->json(['modulo' => $modulo], 200);
+
+        return new ModuloResource($modulo);
     }
 
     /**

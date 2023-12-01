@@ -15,11 +15,17 @@ class Modulo extends Model
         'materia',
         'h_semanales',
         'h_totales',
-        'user_id'
+        'user_id',
+        'especialidad_id'
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function especialidade(): BelongsTo
+    {
+        return $this->belongsTo(Especialidad::class, "especialidad_id");
     }
 }
