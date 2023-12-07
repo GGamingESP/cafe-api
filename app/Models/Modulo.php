@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Modulo extends Model
 {
@@ -27,5 +28,10 @@ class Modulo extends Model
     public function especialidade(): BelongsTo
     {
         return $this->belongsTo(Especialidad::class, "especialidad_id");
+    }
+
+    public function aula(): BelongsToMany
+    {
+        return $this->belongsToMany(Aula::class);
     }
 }

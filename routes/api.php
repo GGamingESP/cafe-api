@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\DepartamentoController;
 use App\Http\Controllers\Api\V1\EspecialidadController;
 use App\Http\Controllers\Api\V1\ModuloController;
 use App\Http\Controllers\Auth\LoginRegisterController;
@@ -29,6 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::apiResource('especialidad', EspecialidadController::class)->missing(function (Request $request) {
             return response()->json(['error' => 'Especialidad not found'], 404);
+        });
+
+        Route::apiResource('departamento', DepartamentoController::class)->missing(function (Request $request) {
+            return response()->json(['error' => 'Departamento not found'], 404);
         });
     });
 });
