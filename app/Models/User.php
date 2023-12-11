@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'departamento_id'
+        'departamento_id',
+        'especialidad_id'
     ];
 
     /**
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function departamento(): BelongsTo
     {
         return $this->belongsTo(Departamento::class, 'departamento_id');
+    }
+
+    public function especialidad(): BelongsTo
+    {
+        return $this->belongsTo(Especialidad::class, 'especialidad_id');
     }
 }

@@ -19,7 +19,7 @@ class ModuloController extends Controller
 
         $modulos = Modulo::all();
 
-        return response()->json(['modulos' => $modulos], 200);
+        return  ModuloResource::collection($modulos);
     }
 
     /**

@@ -32,6 +32,6 @@ class Modulo extends Model
 
     public function aula(): BelongsToMany
     {
-        return $this->belongsToMany(Aula::class);
+        return $this->belongsToMany(Aula::class, 'aula_modulo', 'modulo_id', 'aula_id');
     }
 }

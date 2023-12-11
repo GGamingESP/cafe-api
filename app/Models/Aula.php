@@ -17,6 +17,6 @@ class Aula extends Model
 
     public function modulos(): BelongsToMany
     {
-        return $this->belongsToMany(Modulo::class);
+        return $this->belongsToMany(Modulo::class, 'aula_modulo', 'aula_id', 'modulo_id');
     }
 }

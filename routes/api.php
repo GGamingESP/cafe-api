@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AulaController;
 use App\Http\Controllers\Api\V1\DepartamentoController;
 use App\Http\Controllers\Api\V1\EspecialidadController;
 use App\Http\Controllers\Api\V1\ModuloController;
@@ -35,10 +36,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('departamento', DepartamentoController::class)->missing(function (Request $request) {
             return response()->json(['error' => 'Departamento not found'], 404);
         });
+
+        Route::apiResource('aula', AulaController::class)->missing(function (Request $request) {
+            return response()->json(['error' => 'Aula not found'], 404);
+        });
     });
 });
+
 Route::controller(LoginRegisterController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
-    Route::post('/logout', 'logout');
+    Route::delete('/logout', 'logout');
 });

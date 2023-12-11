@@ -23,7 +23,8 @@ class ModuloResource extends JsonResource
             'horas_semanales' => $this->h_semanales,
             'horas_totales' => $this->h_totales,
             'user_id' => $this->user_id,
-            'especialidad' => new EspecialidadResource(Especialidad::find($this->especialidad_id)),
+            'especialidad' => new EspecialidadResource($this->especialidade),
+            'aula' => ($this->aula),
             // Agrega otros campos según sea necesario
             // 'created_at' => $this->created_at,
             // 'updated_at' => $this->updated_at,

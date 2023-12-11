@@ -16,7 +16,7 @@ class AulaController extends Controller
     {
         //
         $aula = Aula::all();
-        return response()->json(['especialidad' => AulaResource::collection($aula)], 200);
+        return response()->json(['aula' => AulaResource::collection($aula)], 200);
     }
 
     /**
