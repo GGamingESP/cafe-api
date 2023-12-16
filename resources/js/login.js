@@ -5,14 +5,13 @@ let password = document.getElementById("password")
 
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    console.log("hola")
     let formDatos = {
         email : email.value,
         password: password.value
     }
     // const datos = new FormData(loginForm);
     // console.log(datos);
-    fetch("http://cafe-api.test/api/login",{
+    fetch("/api/login",{
         method: 'POST',
         headers: {
             'Accept': '*/*',

@@ -11,7 +11,7 @@ loginForm.addEventListener("submit", (event) => {
     }
     // const datos = new FormData(loginForm);
     // console.log(datos);
-    fetch("http://cafe-api.test/api/login",{
+    fetch("/api/login",{
         method: 'POST',
         headers: {
             'Accept': '*/*',
