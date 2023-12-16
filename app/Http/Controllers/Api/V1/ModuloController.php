@@ -63,16 +63,13 @@ class ModuloController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'codigo' => 'required|string',
-            'materia' => 'required|string',
-            'h_semanales' => 'required|integer',
-            'h_totales' => 'required|integer',
+            'distribucion' => 'required|string',
             'user_id' => 'required|integer',
         ]);
 
         $data = $validator->validated();
 
-        $modulo->update($data);
+        $modulo->update($request->all());
 
         return response()->json(['message' => 'Modulo actualizado correctamente'], 200);
     }

@@ -244,6 +244,7 @@ async function añadirEventos() {
         let table = document.querySelector("table tbody");
         // var newRow = table.insertRow(table.rows.length);
         let newTr = document.createElement("tr");
+        newTr.classList.add("seleccion-nueva")
         let turno = document.createElement("td");
         turno.innerHTML = `
         <select class="turno form-select">
@@ -263,10 +264,12 @@ async function añadirEventos() {
         let modulo = document.createElement("select");
         // aqui se puede añadir el contenido
         modulos.map((e) => {
-            let newOpt = document.createElement("option");
-            newOpt.value = e.id;
-            newOpt.innerText = e.materia;
-            modulo.appendChild(newOpt);
+            if(!e.user_id){
+                let newOpt = document.createElement("option");
+                newOpt.value = e.id;
+                newOpt.innerText = e.materia;
+                modulo.appendChild(newOpt);
+            }
         });
         modulo.addEventListener("input", (e) => {
             let selectedModule = modulos.find((element) => element.id == e.target.value);
@@ -307,6 +310,10 @@ async function añadirEventos() {
         })
         modulo.classList.add("modulo");
         modulo.classList.add("form-select")
+        let defaultModulo = document.createElement("option");
+        defaultModulo.value=""
+        defaultModulo.innerText = "Escoge un modulo";
+        modulo.appendChild(defaultModulo);
         modulotd.appendChild(modulo)
 
         let distribuciontd = document.createElement("td");
@@ -336,7 +343,7 @@ async function añadirEventos() {
             console.log(distValues)
             distValues.forEach((e) => {
                         let newOpt = document.createElement("option") ;
-                        newOpt.value = e ;
+                        newOpt.value = e.join(' + ');
                         newOpt.innerText = e.join(' + ') ;
                         distribucion.appendChild(newOpt)
                     }
@@ -410,4 +417,53 @@ function acceptTerms() {
     cerrarModal();
 }
 
+async function fetchDatosFormulario(id, distribucion) {
+    let updateValue = {
+        distribucion: distribucion,
+        user_id: userData.userID
+    };
 
+    let token = JSON.parse(localStorage.getItem("session")).token;
+
+    try {
+        const response = await fetch(`api/v1/modulos/${id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-type': "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updateValue)
+        });
+
+        if (response.ok) {
+            console.log("actualizar ok");
+            const responseData = await response.json();
+            if (responseData.status === "success") {
+                console.log("actualización completada");
+            } else {
+                throw new Error('La respuesta indica un error');
+            }
+        } else {
+            throw new Error('La solicitud Fetch falló');
+        }
+    } catch (error) {
+        console.error(error.message);
+        // Manejar el error apropiadamente, puedes mostrar un mensaje al usuario o realizar otra acción.
+    }
+}
+
+async function recogerDatos() {
+    let selecciones = document.querySelectorAll(".seleccion-nueva")
+
+    selecciones.forEach((e) => {
+        let id = e.querySelector("td .modulo").value
+        console.log(id)
+        let distribucion = e.querySelector("td .distribucion")
+        let aula = e.querySelector("td .aula");
+        fetchDatosFormulario(id, distribucion.value, aula.value) ;
+    })
+}
+
+document.getElementById("enviar_formulario").addEventListener("click", () => {
+    recogerDatos();
+})

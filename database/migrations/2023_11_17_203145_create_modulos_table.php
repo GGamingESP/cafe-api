@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('materia');
             $table->integer('h_semanales');
             $table->integer('h_totales');
+            $table->string('disitribucion')->nullable();
             $table->foreignId('curso_id')->constrained('cursos');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('especialidad_id')->constrained('especialidades');
