@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,7 +22,10 @@ class LoginRegisterController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'type' => 'required|string',
+            'departamento' => 'required|integer',
+            'especialidad' => 'required|integer',
         ]);
 
         if ($validate->fails()) {
@@ -35,7 +39,10 @@ class LoginRegisterController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'type' => $request->type,
+            'departamento_id' => $request->departamento,
+            'especialidad_id' => $request->especialidad
         ]);
 
         $data['user'] = $user;
@@ -82,7 +89,7 @@ class LoginRegisterController extends Controller
         }
 
         $data['token'] = $user->createToken($request->email)->plainTextToken;
-        $data['user'] = $user;
+        $data['user'] = new UserResource($user);
 
         $response = [
             'status' => 'success',

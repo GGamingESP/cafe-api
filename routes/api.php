@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AulaController;
+use App\Http\Controllers\Api\V1\CursoController;
 use App\Http\Controllers\Api\V1\DepartamentoController;
 use App\Http\Controllers\Api\V1\EspecialidadController;
 use App\Http\Controllers\Api\V1\ModuloController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +42,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('aula', AulaController::class)->missing(function (Request $request) {
             return response()->json(['error' => 'Aula not found'], 404);
         });
+
+        Route::apiResource('curso', CursoController::class)->missing(function (Request $request) {
+            return response()->json(['error' => 'Curso not found'], 404);
+        });
+
+        Route::apiResource('usuarios', UserController::class)->missing(function (Request $request) {
+            return response()->json(['error' => 'User not found'], 404);
+        });
+
+        Route::get('/curso/modulos/{curso}', [CursoController::class, 'todosModulos']);
+        Route::get('/departamento/usuarios/{departamento}', [DepartamentoController::class, 'todosUsuarios']);
+        Route::get('/especialidad/modulos/{especialidad}', [EspecialidadController::class, 'todosModulos']);
+        Route::get('/modulos/aulas/{modulo}', [ModuloController::class, 'todasAulas']);
     });
 });
 

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Resources\EspecialidadResource;
 use App\Models\Especialidad;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ModuloResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EspecialidadController extends Controller
 {
@@ -26,6 +28,31 @@ class EspecialidadController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation Error!',
+                'data' => $validate->errors(),
+            ], 403);
+        }
+
+        $especialidad = Especialidad::create([
+            'name' => $request->name
+        ]);
+
+        $data['especialidad'] = $especialidad;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Especialidad is created successfully.',
+            'data' => $data,
+        ];
+
+        response()->json($response, 201);
     }
 
     /**
@@ -52,5 +79,11 @@ class EspecialidadController extends Controller
     public function destroy(Especialidad $especialidad)
     {
         //
+    }
+
+    public function todosModulos(Especialidad $especialidad)
+    {
+        $modulos = $especialidad->Modulo()->get();
+        return response()->json(['modulos' => ModuloResource::collection($modulos)], 200);
     }
 }

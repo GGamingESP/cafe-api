@@ -17,7 +17,8 @@ class Modulo extends Model
         'h_semanales',
         'h_totales',
         'user_id',
-        'especialidad_id'
+        'especialidad_id',
+        'curso_id'
     ];
 
     public function user(): BelongsTo
@@ -33,5 +34,10 @@ class Modulo extends Model
     public function aula(): BelongsToMany
     {
         return $this->belongsToMany(Aula::class, 'aula_modulo', 'modulo_id', 'aula_id');
+    }
+
+    public function curso(): BelongsTo
+    {
+        return $this->belongsTo(Curso::class, "curso_id");
     }
 }

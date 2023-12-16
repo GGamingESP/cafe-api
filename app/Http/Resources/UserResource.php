@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartamentoResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,12 @@ class DepartamentoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'usuarios' => $this->user
+            'name' => $this->name,
+            'email' => $this->email,
+            'type' => $this->type,
+            'especialidad' => new EspecialidadResource($this->especialidad),
+            'departamento' => new DepartamentoResource($this->departamento),
+            'modulos' => $this->modulo
             // Agrega otros campos según sea necesario
             // 'created_at' => $this->created_at,
             // 'updated_at' => $this->updated_at,

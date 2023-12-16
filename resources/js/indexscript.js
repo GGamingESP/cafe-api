@@ -5,27 +5,7 @@ const userData = JSON.parse(localStorage.getItem("session"))
 let distSemanal = document.getElementById("distribucion1")
 
 
-function nameInNav() {
-    let data = JSON.parse(localStorage.getItem("session"))
-    console.log(data)
-    let userButton = document.getElementById("user_name")
-    userButton.innerText = data.user;
-    let navbar = document.querySelector(".navbar-nav");
-    if(data.tipo == "departamento"){
-        let newLink = document.createElement("li");
-        newLink.innerHTML = `<a class="nav-link" href="/departamento">Jefe de Departamento</a>`
-        navbar.appendChild(newLink);
-    }else if(data.tipo == "estudios"){
-        let newLink = document.createElement("li");
-        newLink.innerHTML = `<a class="nav-link" href="/estudios">Jefe de Estudios</a>`
-        navbar.appendChild(newLink);
-    }
-}
-
-function cerrarSesion() {
-    localStorage.removeItem("session")
-    window.location.href = "/"
-}
+// funcion para crear nueva linea para insertar datos en la tabla
 
 
 // Función para calcular el total de horas
@@ -267,22 +247,15 @@ async function añadirEventos() {
             newOpt.value = e.id;
             newOpt.innerText = e.materia;
             modulo.appendChild(newOpt);
+            console.log("nuevo modulo");
         });
         modulo.addEventListener("input", (e) => {
             let selectedModule = modulos.find((element) => element.id == e.target.value);
             if (selectedModule) {
-                curso.value = selectedModule.curso.nombre ;
                 horasInput.value = selectedModule.horas_semanales;
-                updateTotalHours();
-                let newdist = sumasPosibles(selectedModule.horas_semanales)
-                eliminarHijos(distribucion) ;
-                newdist.forEach((e) => {
-                    let newOpt = document.createElement("option") ;
-                    newOpt.value = e ;
-                    newOpt.innerText = e.join(' + ') ;
-                    distribucion.appendChild(newOpt);
-                })
-                if(selectedModule.turno == "T") {
+                curso.value = selectedModule.curso.nombre;
+
+                if (selectedModule.turno == "T") {
                     turno.innerHTML = `
                         <select class="turno form-select">
                             <option value="T">T</option>
@@ -373,8 +346,6 @@ window.addEventListener("DOMContentLoaded", () => {
     middleware();
     populateData();
     añadirEventos();
-    nameInNav()
-    document.getElementById("cerrar_sesion").addEventListener("click", cerrarSesion);
 })
 
 

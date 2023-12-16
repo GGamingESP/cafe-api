@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Resources\ModuloResource;
 use App\Models\Modulo;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AulaResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,7 +39,7 @@ class ModuloController extends Controller
             'especialidad_id' => 'required|integer'
         ]);
 
-        $data = $data = $validator->validated();
+        $data = $validator->validated();
 
         $modulo = Modulo::create($data);
 
@@ -85,5 +86,11 @@ class ModuloController extends Controller
         $modulo->delete();
 
         return response()->json(['message' => 'Modulo eliminado correctamente'], 200);
+    }
+
+    public function todasAulas(Modulo $modulo)
+    {
+        $aula = $modulo->aula()->get();
+        return response()->json(['aulas' => AulaResource::collection($aula)], 200);
     }
 }

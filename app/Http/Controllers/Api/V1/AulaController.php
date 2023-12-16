@@ -6,6 +6,7 @@ use App\Models\Aula;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AulaResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AulaController extends Controller
 {
@@ -25,6 +26,33 @@ class AulaController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+            'location' => 'required|string|max:100'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation Error!',
+                'data' => $validate->errors(),
+            ], 403);
+        }
+
+        $aula = Aula::create([
+            'name' => $request->name,
+            'location' => $request->location,
+        ]);
+
+        $data['aula'] = $aula;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Aula is created successfully.',
+            'data' => $data,
+        ];
+
+        return response()->json($response, 201);
     }
 
     /**
@@ -42,6 +70,21 @@ class AulaController extends Controller
     public function update(Request $request, Aula $aula)
     {
         //
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+            'location' => 'required|string|max:100'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation Error!',
+                'data' => $validate->errors(),
+            ], 403);
+        };
+
+        $aula->update($request->all());
+        return  response()->json("Ok", 201);
     }
 
     /**
@@ -50,5 +93,7 @@ class AulaController extends Controller
     public function destroy(Aula $aula)
     {
         //
+        Aula::find($aula)->delete();
+        return  response()->json("Ok", 201);
     }
 }

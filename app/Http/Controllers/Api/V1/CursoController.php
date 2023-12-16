@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Resources\DepartamentoResource;
-use App\Models\Departamento;
+use App\Http\Resources\CursoResource;
+use App\Models\Curso;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\ModuloResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DepartamentoController extends Controller
+class CursoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class DepartamentoController extends Controller
     public function index()
     {
         //
-        $departamento = Departamento::all();
-        return response()->json(['departamentos' => DepartamentoResource::collection($departamento)], 200);
+        $curso = Curso::all();
+        return response()->json(['curso' => CursoResource::collection($curso), 200]);
     }
 
     /**
@@ -39,15 +39,15 @@ class DepartamentoController extends Controller
             ], 403);
         }
 
-        $departamento = Departamento::create([
+        $curso = Curso::create([
             'name' => $request->name
         ]);
 
-        $data['departamento'] = $departamento;
+        $data['curso'] = $curso;
 
         $response = [
             'status' => 'success',
-            'message' => 'Departamento is created successfully.',
+            'message' => 'Curso is created successfully.',
             'data' => $data,
         ];
 
@@ -57,16 +57,16 @@ class DepartamentoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Departamento $departamento)
+    public function show(Curso $curso)
     {
         //
-        return new DepartamentoResource($departamento);
+        return new CursoResource($curso);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Departamento $departamento)
+    public function update(Request $request, Curso $curso)
     {
         //
     }
@@ -74,16 +74,17 @@ class DepartamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Departamento $departamento)
+    public function destroy(Curso $curso)
     {
         //
-        Departamento::find($departamento)->delete();
+        Curso::find($curso)->delete();
         return  response()->json("Ok", 201);
     }
 
-    public function todosUsuarios(Departamento $departamento)
+    public function todosModulos(Curso $curso)
     {
-        $users = $departamento->user()->get();
-        return response()->json(['usuarios' => UserResource::collection($users)], 200);
+        // recordar que hay que hacer nueva ruta para esto
+        $modulos = $curso->modulos()->get();
+        return response()->json(['modulos' => ModuloResource::collection($modulos)], 200);
     }
 }

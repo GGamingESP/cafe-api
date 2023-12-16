@@ -5,6 +5,7 @@ let password = document.getElementById("password")
 
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    console.log("hola")
     let formDatos = {
         email : email.value,
         password: password.value
