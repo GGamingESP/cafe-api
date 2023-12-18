@@ -18,8 +18,7 @@
                 <img src="./images/logo.png" alt="Majada Marcial Logo" class="img-fluid mb-3">
                 <h2 class="card-title">Iniciar Sesión</h2>
                 <form id="login-form">
-                    <input type="text" class="form-control" placeholder="Usuario o Email" name="mail"
-                        id="mail">
+                    <input type="text" class="form-control" placeholder="Email" name="mail" id="mail">
                     <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password">
                     <input type="submit" class="btn btn-primary btn-block" id="login-button">
                 </form>

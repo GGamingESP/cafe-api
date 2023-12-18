@@ -262,6 +262,10 @@ async function añadirEventos() {
 
         let modulotd = document.createElement("td");
         let modulo = document.createElement("select");
+        let defaultModulo = document.createElement("option");
+        defaultModulo.value=""
+        defaultModulo.innerText = "Escoge un modulo";
+        modulo.appendChild(defaultModulo);
         // aqui se puede añadir el contenido
         modulos.map((e) => {
             if(!e.user_id){
@@ -310,10 +314,6 @@ async function añadirEventos() {
         })
         modulo.classList.add("modulo");
         modulo.classList.add("form-select")
-        let defaultModulo = document.createElement("option");
-        defaultModulo.value=""
-        defaultModulo.innerText = "Escoge un modulo";
-        modulo.appendChild(defaultModulo);
         modulotd.appendChild(modulo)
 
         let distribuciontd = document.createElement("td");
