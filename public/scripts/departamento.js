@@ -71,6 +71,7 @@ async function generarDatosDepartamento() {
 
 const userData = JSON.parse(localStorage.getItem("session"))
 
+// funcion para saber si estas logeado
 function middleware() {
     if(localStorage.getItem("session")){
         // userData.type != "departamento" ? window.location.href = "/" : "";

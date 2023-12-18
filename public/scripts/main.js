@@ -22,6 +22,7 @@ function cerrarSesion() {
     window.location.href = "/"
 }
 
+// funcion para saber si un usuario se ha logueado
 function middleware() {
     if(!localStorage.getItem("session")){
         window.location.href = "/"

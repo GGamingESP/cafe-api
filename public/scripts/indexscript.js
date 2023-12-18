@@ -157,7 +157,6 @@ function distributionfirst(data) {
 // Acción al aceptar los términos
 function acceptTerms() {
     closeModal(); // Cierra el modal
-    // Agrega aquí cualquier acción adicional que desees realizar después de aceptar los términos.
 }
 document.getElementById('toggleSection').addEventListener('click', function () {
     var toggleableSection = document.querySelector('.toggleable-section');
@@ -238,6 +237,7 @@ async function llamadaValoresFetch() {
     localStorage.setItem("modulos", modulos)
 }
 
+// funcion para añadir los eventos para que funcionen
 async function añadirEventos() {
     await llamadaValoresFetch()
     document.getElementById("agregar-fila").addEventListener("click", function () {
@@ -417,6 +417,7 @@ function acceptTerms() {
     cerrarModal();
 }
 
+// funcion para actualizar los datos de un modulo a traves del formulario
 async function fetchDatosFormulario(id, distribucion) {
     let updateValue = {
         distribucion: distribucion,
@@ -452,6 +453,7 @@ async function fetchDatosFormulario(id, distribucion) {
     }
 }
 
+// funcion que recoge los datos que ha introducido el usuario
 async function recogerDatos() {
     let selecciones = document.querySelectorAll(".seleccion-nueva")
 

@@ -104,6 +104,7 @@ async function generarDepartamentos() {
     }
 }
 
+//funcion que hace el fetch para eliminar usuarios en la base de datos
 async function deleteUsers(id) {
     let token = JSON.parse(localStorage.getItem("session")).token
     await fetch(`/api/v1/usuarios/${id}`, {
@@ -222,12 +223,14 @@ async function generarEspecialidades() {
     })
 }
 
+//funcion para saber si alguien esta logueado
 function middleware() {
     if(!localStorage.getItem("session")){
         window.location.href = "/"
     }
 }
 
+//event listener para registar a un nuevo usuario
 newUserForm.addEventListener("submit", (e) => {
     console.log("intento registro")
     e.preventDefault(); // Evitar el envío por defecto del formulario

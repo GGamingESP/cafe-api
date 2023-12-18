@@ -2,7 +2,7 @@ let loginForm = document.getElementById("login-form")
 let email = document.getElementById("mail");
 let password = document.getElementById("password")
 
-
+// evento para hacer que el login funcione
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
     let formDatos = {
